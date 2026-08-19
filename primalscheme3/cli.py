@@ -92,105 +92,115 @@ def scheme_create(
             resolve_path=True,
         ),
     ],
-    amplicon_size: Annotated[
-        int,
-        typer.Option(
-            help="The size of an amplicon. Min / max size are ± 10 percent [100<=x<=2000]",
-            min=100,
-            max=2000,
-        ),
-    ] = Config.amplicon_size,
-    bedfile: Annotated[
+    # amplicon_size: Annotated[
+    #     int,
+    #     typer.Option(
+    #         help="The size of an amplicon. Min / max size are ± 10 percent [100<=x<=2000]",
+    #         min=100,
+    #         max=2000,
+    #     ),
+    # ] = Config.amplicon_size,
+    # bedfile: Annotated[
+    #     pathlib.Path | None,
+    #     typer.Option(
+    #         help="An existing bedfile to add primers to",
+    #         exists=True,
+    #         readable=True,
+    #         resolve_path=True,
+    #     ),
+    # ] = None,
+    # min_overlap: Annotated[
+    #     int,
+    #     typer.Option(help="min amount of overlap between primers", min=0),
+    # ] = Config.min_overlap,
+    # n_pools: Annotated[
+    #     int, typer.Option(help="Number of pools to use", min=1)
+    # ] = Config.n_pools,
+    # dimer_score: Annotated[
+    #     float,
+    #     typer.Option(
+    #         help="Threshold for dimer interaction",
+    #     ),
+    # ] = Config.dimer_score,
+    # min_base_freq: Annotated[
+    #     float,
+    #     typer.Option(help="Min freq to be included,[0<=x<=1]", min=0.0, max=1.0),
+    # ] = Config.min_base_freq,
+    # mapping: Annotated[
+    #     MappingType,
+    #     typer.Option(
+    #         help="How should the primers in the bedfile be mapped",
+    #     ),
+    # ] = Config.mapping.value,  # type: ignore
+    # circular: Annotated[
+    #     bool, typer.Option(help="Should a circular amplicon be added")
+    # ] = Config.circular,
+    # backtrack: Annotated[
+    #     bool, typer.Option(help="Should the algorithm backtrack")
+    # ] = Config.backtrack,
+    # ignore_n: Annotated[
+    #     bool,
+    #     typer.Option(help="Should N in the input genomes be ignored"),
+    # ] = Config.ignore_n,
+    # force: Annotated[
+    #     bool, typer.Option(help="Override the output directory")
+    # ] = Config.force,
+    # input_bedfile: Annotated[
+    #     pathlib.Path | None,
+    #     typer.Option(
+    #         help="Path to a primer.bedfile containing the pre-calculated primers"
+    #     ),
+    # ] = Config.input_bedfile,
+    # high_gc: Annotated[bool, typer.Option(help="Use high GC primers")] = Config.high_gc,
+    # offline_plots: Annotated[
+    #     bool,
+    #     typer.Option(
+    #         "--offline-plots/--online-plots",
+    #         help="Offline plots includes 3Mb of dependencies, so they can be viewed offline",
+    #     ),
+    # ] = True,
+    # use_matchdb: Annotated[
+    #     bool,
+    #     typer.Option(
+    #         help="Create and use a mispriming database",
+    #     ),
+    # ] = Config.use_matchdb,
+    # ncores: Annotated[
+    #     int,
+    #     typer.Option(help="Number of CPU cores to use during digestion", min=1),
+    # ] = Config.ncores,
+    # use_annealing: Annotated[
+    #     bool,
+    #     typer.Option(
+    #         "--use-annealing/--use-tm",
+    #         help="Using annealing proportion rather than Tm to calculate primers",
+    #     ),
+    # ] = Config.use_annealing,
+    # # Downsample params
+    # downsample: Annotated[
+    #     bool,
+    #     typer.Option(
+    #         help="EXPERIMENTAL: Reduce number of primers in a cloud by calculating inter-primercloud annealing",
+    #         hidden=True,
+    #     ),
+    # ] = Config.downsample,
+    # downsample_target: Annotated[
+    #     float,
+    #     typer.Option(
+    #         help="EXPERIMENTAL: Ensure X proportion of primers have >= annealing (if using downsampling)",
+    #         hidden=True,
+    #     ),
+    # ] = Config.downsample_target,
+    config_file: Annotated[
         pathlib.Path | None,
         typer.Option(
-            help="An existing bedfile to add primers to",
+            "--config",
+            help="Configuration TOML file",
             exists=True,
             readable=True,
             resolve_path=True,
         ),
     ] = None,
-    min_overlap: Annotated[
-        int,
-        typer.Option(help="min amount of overlap between primers", min=0),
-    ] = Config.min_overlap,
-    n_pools: Annotated[
-        int, typer.Option(help="Number of pools to use", min=1)
-    ] = Config.n_pools,
-    dimer_score: Annotated[
-        float,
-        typer.Option(
-            help="Threshold for dimer interaction",
-        ),
-    ] = Config.dimer_score,
-    min_base_freq: Annotated[
-        float,
-        typer.Option(help="Min freq to be included,[0<=x<=1]", min=0.0, max=1.0),
-    ] = Config.min_base_freq,
-    mapping: Annotated[
-        MappingType,
-        typer.Option(
-            help="How should the primers in the bedfile be mapped",
-        ),
-    ] = Config.mapping.value,  # type: ignore
-    circular: Annotated[
-        bool, typer.Option(help="Should a circular amplicon be added")
-    ] = Config.circular,
-    backtrack: Annotated[
-        bool, typer.Option(help="Should the algorithm backtrack")
-    ] = Config.backtrack,
-    ignore_n: Annotated[
-        bool,
-        typer.Option(help="Should N in the input genomes be ignored"),
-    ] = Config.ignore_n,
-    force: Annotated[
-        bool, typer.Option(help="Override the output directory")
-    ] = Config.force,
-    input_bedfile: Annotated[
-        pathlib.Path | None,
-        typer.Option(
-            help="Path to a primer.bedfile containing the pre-calculated primers"
-        ),
-    ] = Config.input_bedfile,
-    high_gc: Annotated[bool, typer.Option(help="Use high GC primers")] = Config.high_gc,
-    offline_plots: Annotated[
-        bool,
-        typer.Option(
-            "--offline-plots/--online-plots",
-            help="Offline plots includes 3Mb of dependencies, so they can be viewed offline",
-        ),
-    ] = True,
-    use_matchdb: Annotated[
-        bool,
-        typer.Option(
-            help="Create and use a mispriming database",
-        ),
-    ] = Config.use_matchdb,
-    ncores: Annotated[
-        int,
-        typer.Option(help="Number of CPU cores to use during digestion", min=1),
-    ] = Config.ncores,
-    use_annealing: Annotated[
-        bool,
-        typer.Option(
-            "--use-annealing/--use-tm",
-            help="Using annealing proportion rather than Tm to calculate primers",
-        ),
-    ] = Config.use_annealing,
-    # Downsample params
-    downsample: Annotated[
-        bool,
-        typer.Option(
-            help="EXPERIMENTAL: Reduce number of primers in a cloud by calculating inter-primercloud annealing",
-            hidden=True,
-        ),
-    ] = Config.downsample,
-    downsample_target: Annotated[
-        float,
-        typer.Option(
-            help="EXPERIMENTAL: Ensure X proportion of primers have >= annealing (if using downsampling)",
-            hidden=True,
-        ),
-    ] = Config.downsample_target,
 ):
     """
     Creates a tiling overlap scheme for each MSA file
@@ -199,7 +209,7 @@ def scheme_create(
     config = Config(**locals())
 
     # Check the output directory
-    check_output_dir(output, force)
+    check_output_dir(output, config.force)
 
     # Set up the progress manager
     pm = ProgressManager()
@@ -208,9 +218,9 @@ def scheme_create(
         output_dir=output,
         config=config,
         pm=pm,
-        force=force,
-        input_bedfile=input_bedfile,
-        offline_plots=offline_plots,
+        force=config.force,
+        input_bedfile=config.input_bedfile,
+        offline_plots=True,
     )
 
 

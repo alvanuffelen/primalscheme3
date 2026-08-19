@@ -1,4 +1,5 @@
 import pathlib
+import tomllib
 from enum import Enum
 from importlib.metadata import version
 from typing import Any
@@ -83,6 +84,11 @@ class Config:
     dimer_score: float = -26.0
 
     def __init__(self, **kwargs: Any) -> None:
+        config_file = kwargs.pop("config_file", None)
+
+        if config_file is not None:
+            self._load_config(config_file)
+
         self.assign_kwargs(**kwargs)
         # Set amplicon size
         if self.amplicon_size_min == 0:
@@ -104,6 +110,10 @@ class Config:
         # Set annealing
         if self.use_annealing:
             self.primer_annealing_prop = self._primer_annealing_prop_default
+
+    def _load_config(self, path: pathlib.Path) -> None:
+        with path.open("rb") as handle:
+            self.assign_kwargs(**tomllib.load(handle))
 
     def items(self) -> dict[str, Any]:
         """
@@ -141,13 +151,20 @@ class Config:
         return "\n".join(f"{key}: {val}" for key, val in self.items())
 
     def assign_kwargs(self, **kwargs: Any) -> None:
+        ignored = {"msa", "config_file", "offline_plots"}
+
         for key, value in kwargs.items():
             # Check if key is valid
+            if key in ignored:
+                continue
             if value is None:
                 continue
 
             if key == "input_bedfile":
-                setattr(self, key, pathlib.Path(value))
+                if value:
+                    setattr(self, key, pathlib.Path(value))
+                else:
+                    setattr(self, key, None)
                 continue
 
             if hasattr(self, key):
@@ -169,6 +186,9 @@ class Config:
                     setattr(self, key, str(value))
                 else:
                     print(f"Could not parse {key} with value {value} ({type(value)}")
+
+            if not hasattr(self, key):
+                raise ValueError(f"Unknown configuration option: {key}")
 
 
 # All bases allowed in the input MSA
