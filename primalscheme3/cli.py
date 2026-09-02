@@ -92,23 +92,23 @@ def scheme_create(
             resolve_path=True,
         ),
     ],
-    # amplicon_size: Annotated[
-    #     int,
-    #     typer.Option(
-    #         help="The size of an amplicon. Min / max size are ± 10 percent [100<=x<=2000]",
-    #         min=100,
-    #         max=2000,
-    #     ),
-    # ] = Config.amplicon_size,
-    # bedfile: Annotated[
-    #     pathlib.Path | None,
-    #     typer.Option(
-    #         help="An existing bedfile to add primers to",
-    #         exists=True,
-    #         readable=True,
-    #         resolve_path=True,
-    #     ),
-    # ] = None,
+    amplicon_size: Annotated[
+        int,
+        typer.Option(
+            help="The size of an amplicon. Min / max size are ± 10 percent [100<=x<=2000]",
+            min=100,
+            max=2000,
+        ),
+    ] = Config.amplicon_size,
+    bedfile: Annotated[
+        pathlib.Path | None,
+        typer.Option(
+            help="An existing bedfile to add primers to",
+            exists=True,
+            readable=True,
+            resolve_path=True,
+        ),
+    ] = None,
     # min_overlap: Annotated[
     #     int,
     #     typer.Option(help="min amount of overlap between primers", min=0),
@@ -116,12 +116,12 @@ def scheme_create(
     # n_pools: Annotated[
     #     int, typer.Option(help="Number of pools to use", min=1)
     # ] = Config.n_pools,
-    # dimer_score: Annotated[
-    #     float,
-    #     typer.Option(
-    #         help="Threshold for dimer interaction",
-    #     ),
-    # ] = Config.dimer_score,
+    dimer_score: Annotated[
+        float,
+        typer.Option(
+            help="Threshold for dimer interaction",
+        ),
+    ] = Config.dimer_score,
     # min_base_freq: Annotated[
     #     float,
     #     typer.Option(help="Min freq to be included,[0<=x<=1]", min=0.0, max=1.0),
@@ -165,10 +165,10 @@ def scheme_create(
     #         help="Create and use a mispriming database",
     #     ),
     # ] = Config.use_matchdb,
-    # ncores: Annotated[
-    #     int,
-    #     typer.Option(help="Number of CPU cores to use during digestion", min=1),
-    # ] = Config.ncores,
+    ncores: Annotated[
+        int,
+        typer.Option(help="Number of CPU cores to use during digestion", min=1),
+    ] = Config.ncores,
     # use_annealing: Annotated[
     #     bool,
     #     typer.Option(
@@ -191,6 +191,18 @@ def scheme_create(
     #         hidden=True,
     #     ),
     # ] = Config.downsample_target,
+    primer_tm_min: Annotated[
+        float,
+        typer.Option(
+            help="Minimum primer melting temperature",
+        ),
+    ] = Config.primer_tm_min,
+    primer_tm_max: Annotated[
+        float,
+        typer.Option(
+            help="Minimum primer melting temperature",
+        ),
+    ] = Config.primer_tm_max,
     config_file: Annotated[
         pathlib.Path | None,
         typer.Option(
