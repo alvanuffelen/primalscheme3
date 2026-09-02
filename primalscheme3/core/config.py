@@ -65,7 +65,8 @@ class Config:
     _primer_annealing_prop_default = 20
     use_annealing: bool = False
 
-    primer_hairpin_th_max: float = 51
+    # primer_hairpin_th_max: float = 51
+    primer_hairpin_dg_max: float = -3
     primer_homopolymer_max: int = 5
     primer_max_walk: int = 80
     # MatchDB Settings

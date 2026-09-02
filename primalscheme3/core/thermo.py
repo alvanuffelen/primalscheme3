@@ -100,7 +100,7 @@ def calc_hairpin_tm(seq: str, mv_conc, dv_conc, dntp_conc, dna_conc) -> float:
         dv_conc=dv_conc,
         dntp_conc=dntp_conc,
         dna_conc=dna_conc,
-    ).tm
+    ).dg
 
 
 def calc_hairpin_struct(seq: str, mv_conc, dv_conc, dntp_conc, dna_conc) -> float:
@@ -133,7 +133,7 @@ def forms_hairpin(seqs: list[str], config: Config) -> bool:
                 dntp_conc=config.dntp_conc,
                 dna_conc=config.dna_conc,
             )
-            > config.primer_hairpin_th_max
+            > config.primer_hairpin_dg_max
         ):
             return True
     return False
@@ -218,7 +218,7 @@ def thermo_check(kmer_seq: str, config: Config) -> THERMO_RESULT:
             dntp_conc=config.dntp_conc,
             dna_conc=config.dna_conc,
         )
-        > config.primer_hairpin_th_max
+        > config.primer_hairpin_dg_max
     ):
         return THERMO_RESULT.HAIRPIN
 
