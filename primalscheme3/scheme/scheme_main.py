@@ -75,6 +75,10 @@ def schemecreate(
     if pm is None:
         pm = ProgressManager()
 
+    logger.info(
+        f"{str(vars(config))}",
+    )
+
     # Create the mismatch db
     logger.info(
         "Creating the Mismatch Database",
