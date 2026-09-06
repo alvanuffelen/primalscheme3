@@ -133,7 +133,7 @@ def forms_hairpin(seqs: list[str], config: Config) -> bool:
                 dntp_conc=config.dntp_conc,
                 dna_conc=config.dna_conc,
             )
-            > config.primer_hairpin_dg_max
+            < config.primer_hairpin_dg_max
         ):
             return True
     return False
