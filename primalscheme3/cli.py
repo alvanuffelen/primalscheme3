@@ -213,6 +213,20 @@ def scheme_create(
             resolve_path=True,
         ),
     ] = None,
+    _primer_size_default_min: Annotated[
+        int,
+        typer.Option(
+            "--primer-size-min",
+            help="Minimum primer size.",
+        ),
+    ] = 19,
+    _primer_size_default_max: Annotated[
+        int,
+        typer.Option(
+            "--primer-size-max",
+            help="Minimum primer size.",
+        ),
+    ] = 36,
 ):
     """
     Creates a tiling overlap scheme for each MSA file
