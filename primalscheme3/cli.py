@@ -224,9 +224,23 @@ def scheme_create(
         int,
         typer.Option(
             "--primer-size-max",
-            help="Minimum primer size.",
+            help="Maximum primer size.",
         ),
     ] = 36,
+    _primer_gc_default_min: Annotated[
+        int,
+        typer.Option(
+            "--primer-gc-min",
+            help="Minimum primer GC.",
+        ),
+    ] = 30,
+    _primer_gc_default_max: Annotated[
+        int,
+        typer.Option(
+            "--primer-gc-max",
+            help="Maximum primer GC.",
+        ),
+    ] = 50,
 ):
     """
     Creates a tiling overlap scheme for each MSA file
