@@ -109,10 +109,10 @@ def scheme_create(
             resolve_path=True,
         ),
     ] = None,
-    # min_overlap: Annotated[
-    #     int,
-    #     typer.Option(help="min amount of overlap between primers", min=0),
-    # ] = Config.min_overlap,
+    min_overlap: Annotated[
+        int,
+        typer.Option(help="min amount of overlap between primers", min=0),
+    ] = Config.min_overlap,
     # n_pools: Annotated[
     #     int, typer.Option(help="Number of pools to use", min=1)
     # ] = Config.n_pools,
